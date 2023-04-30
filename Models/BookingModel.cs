@@ -11,17 +11,19 @@ namespace MovieTicketBookingApp.Models
 
         public DateTime ? BookedAt { get; set; } = DateTime.Now;
 
-
-        [Required]
-        [ForeignKey("User")]
-        public string UserId {get; set; }
-
-        [Required]
-        [ForeignKey("Show")]
-        public int ShowId { get; set; }
-
-        public virtual IdentityUser User { get; set; }
-
         public virtual ShowModel Show { get; set; }
+        [ForeignKey("Show")] public int ShowId { get; set; }
+
+
+
+
+        [ForeignKey("User")]
+        public string UserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
+
+
+        
+
+
     }
 }

@@ -4,7 +4,7 @@ using MovieTicketBookingApp.Models;
 
 namespace MovieTicketBookingApp.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -35,21 +35,41 @@ namespace MovieTicketBookingApp.Data
                 .HasForeignKey(u => u.ScreenId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // A show has many bookings
+            modelBuilder.Entity<ShowModel>()
+                .HasMany(s => s.Bookings);
+
             // A screen has multiple shows
             modelBuilder.Entity<ScreenModel>().HasMany(s => s.Shows);
 
-            // modelBuilder.Entity<MovieModel>().HasMany(T => T.Shows);
+            // A movie has many shows
+            modelBuilder.Entity<MovieModel>().HasMany(T => T.Shows);
+
 
             
 
+            // A booking has a user with many bookings
+            modelBuilder.Entity<BookingModel>()
+                .HasOne(u => u.User)
+                .WithMany(s => s.Bookings)
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+                
+            // A booking has one show with many bookings
+            modelBuilder.Entity<BookingModel>()
+                .HasOne(u=>u.Show)
+                .WithMany(s=>s.Bookings)
+                .HasForeignKey(t=>t.ShowId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Auto generated date time on creation of the row on the sql
-            //modelBuilder.Entity<BookingModel>()
-            //    .HasOne(u=>u.User)
-            //    .WithMany(s=>)
-            //    .Property(b => b.BookedAt)
-            //    .HasDefaultValueSql("getdate()");
-        
+            modelBuilder.Entity<BookingModel>()
+                .Property(b => b.BookedAt)
+                .HasDefaultValueSql("getdate()");
+
+            // A user can have many bookings
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(u=>u.Bookings);
         }
 
         public DbSet<TheaterModel> Theater { get; set; }
@@ -57,6 +77,10 @@ namespace MovieTicketBookingApp.Data
 
         public DbSet<MovieModel> Movies { get; set; }
         public DbSet<ShowModel> Show { get; set; }
+
+        public DbSet<BookingModel> Bookings { get; set; }
+
+        public DbSet<ApplicationUser> AspNetUsers { get; set; }
         
 
 

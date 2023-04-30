@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieTicketBookingApp.Data;
 
@@ -11,9 +12,10 @@ using MovieTicketBookingApp.Data;
 namespace MovieTicketBookingApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230430145041_user booking2")]
+    partial class userbooking2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,7 +252,7 @@ namespace MovieTicketBookingApp.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("BookingModel");
                 });
 
             modelBuilder.Entity("MovieTicketBookingApp.Models.MovieModel", b =>
@@ -432,7 +434,7 @@ namespace MovieTicketBookingApp.Data.Migrations
             modelBuilder.Entity("MovieTicketBookingApp.Models.ShowModel", b =>
                 {
                     b.HasOne("MovieTicketBookingApp.Models.MovieModel", "Movie")
-                        .WithMany("Shows")
+                        .WithMany()
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -451,11 +453,6 @@ namespace MovieTicketBookingApp.Data.Migrations
             modelBuilder.Entity("MovieTicketBookingApp.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Bookings");
-                });
-
-            modelBuilder.Entity("MovieTicketBookingApp.Models.MovieModel", b =>
-                {
-                    b.Navigation("Shows");
                 });
 
             modelBuilder.Entity("MovieTicketBookingApp.Models.ScreenModel", b =>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieTicketBookingApp.Data;
 
@@ -11,9 +12,10 @@ using MovieTicketBookingApp.Data;
 namespace MovieTicketBookingApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230430140759_user booking1")]
+    partial class userbooking1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -237,20 +239,15 @@ namespace MovieTicketBookingApp.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<int>("ShowId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("BookingId");
 
-                    b.HasIndex("ShowId");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("BookingModel");
                 });
 
             modelBuilder.Entity("MovieTicketBookingApp.Models.MovieModel", b =>
@@ -401,19 +398,11 @@ namespace MovieTicketBookingApp.Data.Migrations
 
             modelBuilder.Entity("MovieTicketBookingApp.Models.BookingModel", b =>
                 {
-                    b.HasOne("MovieTicketBookingApp.Models.ShowModel", "Show")
-                        .WithMany("Bookings")
-                        .HasForeignKey("ShowId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MovieTicketBookingApp.Models.ApplicationUser", "User")
                         .WithMany("Bookings")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Show");
 
                     b.Navigation("User");
                 });
@@ -432,7 +421,7 @@ namespace MovieTicketBookingApp.Data.Migrations
             modelBuilder.Entity("MovieTicketBookingApp.Models.ShowModel", b =>
                 {
                     b.HasOne("MovieTicketBookingApp.Models.MovieModel", "Movie")
-                        .WithMany("Shows")
+                        .WithMany()
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -453,19 +442,9 @@ namespace MovieTicketBookingApp.Data.Migrations
                     b.Navigation("Bookings");
                 });
 
-            modelBuilder.Entity("MovieTicketBookingApp.Models.MovieModel", b =>
-                {
-                    b.Navigation("Shows");
-                });
-
             modelBuilder.Entity("MovieTicketBookingApp.Models.ScreenModel", b =>
                 {
                     b.Navigation("Shows");
-                });
-
-            modelBuilder.Entity("MovieTicketBookingApp.Models.ShowModel", b =>
-                {
-                    b.Navigation("Bookings");
                 });
 
             modelBuilder.Entity("MovieTicketBookingApp.Models.TheaterModel", b =>

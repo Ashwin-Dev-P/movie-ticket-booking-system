@@ -27,5 +27,10 @@ namespace MovieTicketBookingApp.Models
         public virtual MovieModel Movie { get; set; }
         public virtual ScreenModel Screen { get; set; }
 
+
+
+        // A show can have multiple bookings
+         public virtual ICollection<BookingModel> Bookings { get; set; }
+
     }
 }
