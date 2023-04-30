@@ -50,7 +50,7 @@ namespace MovieTicketBookingApp.Controllers
         public IActionResult Create()
         {
             ViewData["MovieId"] = new SelectList(_context.Movies, "movieId", "title");
-            ViewData["ScreenId"] = new SelectList(_context.Screens, "ScreenId", "ScreenId");
+            ViewData["ScreenId"] = new SelectList(_context.Screens, "ScreenId", "Name");
             return View();
         }
 
@@ -59,13 +59,12 @@ namespace MovieTicketBookingApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ShowId,ShowTime,ScreenId,MovieId")] ShowModel showModel)
+        public async Task<IActionResult> Create([Bind("ShowId,ShowTime,Price,ScreenId,MovieId")] ShowModel showModel)
         {
             //if (ModelState.IsValid)
             //{
-                
+               
             //}
-
             try
             {
                 _context.Add(showModel);
@@ -74,7 +73,7 @@ namespace MovieTicketBookingApp.Controllers
             }
             catch(Exception ex)
             {
-                Console.WriteLine("Error:" + ex.Message);
+                Console.WriteLine(ex.Message);
             }
             ViewData["MovieId"] = new SelectList(_context.Movies, "movieId", "title", showModel.MovieId);
             ViewData["ScreenId"] = new SelectList(_context.Screens, "ScreenId", "ScreenId", showModel.ScreenId);
@@ -104,7 +103,7 @@ namespace MovieTicketBookingApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ShowId,ShowTime,ScreenId,MovieId")] ShowModel showModel)
+        public async Task<IActionResult> Edit(int id, [Bind("ShowId,ShowTime,Price,ScreenId,MovieId")] ShowModel showModel)
         {
             if (id != showModel.ShowId)
             {
@@ -115,7 +114,6 @@ namespace MovieTicketBookingApp.Controllers
             //{
                 
             //}
-
             try
             {
                 try
@@ -138,7 +136,7 @@ namespace MovieTicketBookingApp.Controllers
             }
             catch(Exception ex)
             {
-                Console.WriteLine("Error:" + ex.Message);
+                Console.WriteLine(ex.Message);
             }
             ViewData["MovieId"] = new SelectList(_context.Movies, "movieId", "title", showModel.MovieId);
             ViewData["ScreenId"] = new SelectList(_context.Screens, "ScreenId", "ScreenId", showModel.ScreenId);

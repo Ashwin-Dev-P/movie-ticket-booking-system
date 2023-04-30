@@ -31,8 +31,11 @@
                 @Html.DisplayFor(modelItem => item.description)
             </td>
             <td>
+
+                    <a asp-action="Details" asp-route-id="@item.movieId">Book Tickets</a> |
+                   @* <a asp-action="Edit" asp-route-id="@item.movieId">View Theaters</a> |*@
                 <a asp-action="Edit" asp-route-id="@item.movieId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.movieId">Details</a> |
+                
                 <a asp-action="Delete" asp-route-id="@item.movieId">Delete</a>
             </td>
         </tr>

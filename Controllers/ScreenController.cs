@@ -49,7 +49,7 @@ namespace MovieTicketBookingApp.Controllers
         // GET: Screen/Create
         public IActionResult Create()
         {
-            ViewData["TheaterId"] = new SelectList(_context.Theater, "TheaterId", "Address");
+            ViewData["TheaterId"] = new SelectList(_context.Theater, "TheaterId", "Name");
             return View();
         }
 

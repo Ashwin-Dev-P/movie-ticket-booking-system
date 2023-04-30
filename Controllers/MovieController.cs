@@ -27,6 +27,17 @@ namespace MovieTicketBookingApp.Controllers
                           Problem("Entity set 'ApplicationDbContext.Movies'  is null.");
         }
 
+        // GET: Movie
+        public  IActionResult GetTheatersWithMovie(int id)
+        {
+            var theaters = from show in _context.Show join screen in _context.Screens on show.ScreenId equals screen.ScreenId join theater in _context.Theater on screen.TheaterId equals theater.TheaterId where(show.MovieId == id)  select (theater)  ;
+            
+            
+            return View(theaters);
+            //return View(await _context.Show.Where(show => show.MovieId == id).Include("Theater").ToListAsync());
+                        
+        }
+
         // GET: Movie/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -58,11 +69,19 @@ namespace MovieTicketBookingApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("movieId,title,description")] MovieModel movieModel)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+                
+            //}
+            try
             {
                 _context.Add(movieModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error:" + ex.Message);
             }
             return View(movieModel);
         }
