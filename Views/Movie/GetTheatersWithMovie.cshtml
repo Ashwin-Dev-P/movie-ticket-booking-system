@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<MovieTicketBookingApp.Models.TheaterModel>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -10,7 +8,7 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                Location
             </th>
             <th></th>
         </tr>
@@ -23,9 +21,10 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Address)
+                    
             </td>
             <td>
-                <a class="btn btn-primary">Select screen</a>
+                <a class="btn btn-primary" href="/Movie/ViewScreens?TheaterId=@item.TheaterId&MovieId=4">View shows</a>
                @* <a asp-action="Edit" asp-route-id="@item.TheaterId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.TheaterId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.TheaterId">Delete</a>*@

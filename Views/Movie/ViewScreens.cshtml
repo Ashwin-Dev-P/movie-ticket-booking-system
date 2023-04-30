@@ -1,0 +1,59 @@
+﻿
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Screen Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Show timing
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        
+
+        @foreach (var item in ViewBag.screensAndTimings)
+        {
+            <tr>
+                <td>
+
+                    @item.screenName
+                  
+                </td>
+                <td>
+                    @item.screenDescription
+                </td>
+                <td>
+                    @item.showTime
+                </td>
+                <td>
+                    Rs. @item.price
+                </td>
+                <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.ScreenId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ScreenId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ScreenId">Delete</a>*@
+                </td>
+            </tr>
+            
+
+           
+
+            
+
+            
+        }
+    </tbody>
+</table>

@@ -38,6 +38,24 @@ namespace MovieTicketBookingApp.Controllers
                         
         }
 
+        // Get: Screens
+        [HttpGet]
+        public IActionResult ViewScreens([FromQuery(Name = "TheaterId")] int TheaterId, [FromQuery(Name = "MovieId")] int MovieId)
+        {
+            //var screens = from show in _context.Show join screen in _context.Screens on show.ScreenId equals screen.ScreenId join theater in _context.Theater on screen.TheaterId equals theater.TheaterId where (show.MovieId == id) select (theater);
+            var screensAndTimings = from myscreen in _context.Screens where (myscreen.TheaterId == TheaterId) join show in _context.Show  on myscreen.ScreenId equals show.ScreenId where ( show.MovieId == MovieId) //join movie in _context.Movies on show.MovieId equals movie.movieId
+                          select ( new {  showTime = show.ShowTime, screenName= myscreen.Name, screenDescription = myscreen.Description , price = show.Price }   );
+
+            foreach (var item in screensAndTimings)
+            {
+                Console.WriteLine(item);
+            }
+            ViewBag.screensAndTimings = screensAndTimings;
+            return View();
+            //return View(await _context.Show.Where(show => show.MovieId == id).Include("Theater").ToListAsync());
+
+        }
+
         // GET: Movie/Details/5
         public async Task<IActionResult> Details(int? id)
         {
