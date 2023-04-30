@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieTicketBookingApp.Data;
 
@@ -11,9 +12,10 @@ using MovieTicketBookingApp.Data;
 namespace MovieTicketBookingApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230430092451_show")]
+    partial class show
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,7 +243,7 @@ namespace MovieTicketBookingApp.Data.Migrations
 
                     b.HasKey("movieId");
 
-                    b.ToTable("Movies", (string)null);
+                    b.ToTable("Movies");
                 });
 
             modelBuilder.Entity("MovieTicketBookingApp.Models.ScreenModel", b =>
@@ -266,7 +268,7 @@ namespace MovieTicketBookingApp.Data.Migrations
 
                     b.HasIndex("TheaterId");
 
-                    b.ToTable("Screens", (string)null);
+                    b.ToTable("Screens");
                 });
 
             modelBuilder.Entity("MovieTicketBookingApp.Models.ShowModel", b =>
@@ -292,7 +294,7 @@ namespace MovieTicketBookingApp.Data.Migrations
 
                     b.HasIndex("ScreenId");
 
-                    b.ToTable("Show", (string)null);
+                    b.ToTable("Show");
                 });
 
             modelBuilder.Entity("MovieTicketBookingApp.Models.TheaterModel", b =>
@@ -313,7 +315,7 @@ namespace MovieTicketBookingApp.Data.Migrations
 
                     b.HasKey("TheaterId");
 
-                    b.ToTable("Theater", (string)null);
+                    b.ToTable("Theater");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

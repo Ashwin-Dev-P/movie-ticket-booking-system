@@ -8,16 +8,20 @@ namespace MovieTicketBookingApp.Models
         [Key]
         public int ScreenId { get; set; }
 
-        [Required]
+       
         public string Name { get; set; }
 
-
+        [DataType(DataType.MultilineText)]
         public string? Description { get; set; }
 
+        
         [ForeignKey("Theater")]
         public int TheaterId { get; set; }
 
-        [Required]
+        
         public virtual TheaterModel Theater { get; set; }
+
+        // A Screen can have multiple shows
+        public virtual ICollection<ShowModel> Shows { get; set; }
     }
 }
