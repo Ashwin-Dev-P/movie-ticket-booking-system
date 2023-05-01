@@ -44,12 +44,9 @@ namespace MovieTicketBookingApp.Controllers
         {
             //var screens = from show in _context.Show join screen in _context.Screens on show.ScreenId equals screen.ScreenId join theater in _context.Theater on screen.TheaterId equals theater.TheaterId where (show.MovieId == id) select (theater);
             var screensAndTimings = from myscreen in _context.Screens where (myscreen.TheaterId == TheaterId) join show in _context.Show  on myscreen.ScreenId equals show.ScreenId where ( show.MovieId == MovieId) //join movie in _context.Movies on show.MovieId equals movie.movieId
-                          select ( new {  showTime = show.ShowTime, screenName= myscreen.Name, screenDescription = myscreen.Description , price = show.Price }   );
+                          select ( new { showId=show.ShowId,  showTime = show.ShowTime, screenName= myscreen.Name, screenDescription = myscreen.Description , price = show.Price }   );
 
-            foreach (var item in screensAndTimings)
-            {
-                Console.WriteLine(item);
-            }
+            
             ViewBag.screensAndTimings = screensAndTimings;
             return View();
             //return View(await _context.Show.Where(show => show.MovieId == id).Include("Theater").ToListAsync());
@@ -80,6 +77,31 @@ namespace MovieTicketBookingApp.Controllers
             return View();
         }
 
+        // GET: Movie/ConfirmBooking/5
+        //[HttpGet("/{ShowId:int}")]
+        [HttpGet]
+        public IActionResult ConfirmBooking(int id)
+        {
+            
+            int ShowId = id;
+            
+            var showDetails = (from show in _context.Show
+                              where (show.ShowId == ShowId)
+                              join
+                              screen in _context.Screens on show.ScreenId equals screen.ScreenId
+                              join
+                              theater in _context.Theater on screen.TheaterId equals theater.TheaterId
+                              select (new { theaterName = theater.Name, screenName = screen.Name, showId= ShowId, price= show.Price, showTiming= show.ShowTime  })
+                              ).Single()
+                              ;
+
+           
+            ViewBag.showDetails = showDetails;
+
+            
+            return View();
+        }
+
         // POST: Movie/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -103,6 +125,10 @@ namespace MovieTicketBookingApp.Controllers
             }
             return View(movieModel);
         }
+
+        
+        
+
 
         // GET: Movie/Edit/5
         public async Task<IActionResult> Edit(int? id)

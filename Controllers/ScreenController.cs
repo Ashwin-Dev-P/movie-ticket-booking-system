@@ -124,6 +124,10 @@ namespace MovieTicketBookingApp.Controllers
 
             //if (ModelState.IsValid)
             //{
+                
+            //}
+            try
+            {
                 try
                 {
                     _context.Update(screenModel);
@@ -141,7 +145,11 @@ namespace MovieTicketBookingApp.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            //}
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             ViewData["TheaterId"] = new SelectList(_context.Theater, "TheaterId", "Address", screenModel.TheaterId);
             return View(screenModel);
         }

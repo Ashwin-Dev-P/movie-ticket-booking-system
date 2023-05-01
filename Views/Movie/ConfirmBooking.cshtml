@@ -1,0 +1,154 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div>
+    <h1 class="text-center">Confirm booking</h>
+</div>
+<div class="row">
+
+
+<div class="col-xs-12 col-md-6 offset-md-3 shadow p-5">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            
+            </thead>
+            <tbody>
+                <tr>
+                        <th scope="row">
+                        Show Id
+                    </th>
+                    <td>
+                        @ViewBag.showDetails.showId
+                    </td>
+                </tr>
+                <tr>
+                        <th scope="row">
+                        Theater name
+                    </th>
+                    <td>
+                        @ViewBag.showDetails.theaterName
+                    </td>
+                </tr>
+                <tr>
+                        <th scope="row">
+                        Screen name 
+                    </th>
+                    <td>
+                        @ViewBag.showDetails.screenName
+                    </td>
+                </tr>
+                <tr>
+                        <th scope="row">
+                        Timing
+                    </th>
+                    <td>
+                        @ViewBag.showDetails.showTiming
+                    </td>
+                </tr>
+                <tr>
+                        <th scope="row">
+                        Price
+                    </th>
+                    <td>
+                        @ViewBag.showDetails.price
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    
+    </div>
+        <div class="text-center">
+            <div id="infoDiv"  class="alert " role="alert">
+
+            </div>
+            <button class="btn btn-primary" onclick="ConfirmBooking()" id="bookBtn">
+                Confirm booking
+            </button>
+        </div>
+    
+    
+    </div>
+</div>
+
+<script>
+   
+    const infoDiv = document.getElementById("infoDiv");
+
+    
+    // Example POST method implementation:
+    async function postData(url = "", data = {}) {
+        // Default options are marked with *
+        const response = await fetch(url, {
+            method: "POST",
+            mode: "cors", // no-cors, *cors, same-origin
+            
+            credentials: "include", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(data), // body data type must match "Content-Type" header
+        });
+        return response.json(); // parses JSON response into native JavaScript objects
+    }
+
+
+    
+
+    function ConfirmBooking(){
+        
+
+        // Booking initiated
+        const bookBtn = document.getElementById("bookBtn");
+        bookBtn.innerHTML = "Booking...";
+        bookBtn.setAttribute("disabled",true);
+        
+        
+        const backendurl = "/api/BookingModel";
+        const reqDataBody = {
+          
+            ShowId: @ViewBag.showDetails.showId
+        }
+        postData(backendurl, reqDataBody)
+        .then((data) => {
+            
+            console.log(data); 
+
+            infoDiv.innerHTML = "Your booking is confirmed. Your booking id is " + data.bookingId ;
+            infoDiv.classList.add("alert-success");
+
+            bookBtn.remove();
+        }).catch((error)=>{
+
+            infoDiv.innerHTML = "Unable to book ticket. Something went wrong";
+            infoDiv.classList.add("alert-danger");
+
+            bookBtn.innerHTML = "Try confirming booking again";
+            bookBtn.removeAttribute("disabled");
+
+            console.error(error);
+
+
+            
+        })
+
+        
+        
+
+        
+    }
+
+</script>
+
+
+
+
+
+
+
