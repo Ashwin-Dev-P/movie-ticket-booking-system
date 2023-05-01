@@ -4,8 +4,19 @@
 @{
 }
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/Movie">Movies</a></li>
+        <li class="breadcrumb-item"><a href="/Movie/Details/@ViewBag.showDetails.movieId">Movie Details</a></li>
+        <li class="breadcrumb-item"><a href="/Movie/GetTheatersWithMovie/@ViewBag.showDetails.movieId">Theater</a></li>
+        <li class="breadcrumb-item"><a href="/Movie/ViewScreens?TheaterId=@ViewBag.showDetails.theaterId&MovieId=@ViewBag.showDetails.movieId">Show</a></li>
+
+        <li class="breadcrumb-item active" aria-current="page">Booking confirmation</li>
+    </ol>
+</nav>
+
 <div>
-    <h1 class="text-center">Confirm booking</h>
+    <h1 class="text-center">Confirm booking</h1>
 </div>
 <div class="row">
 

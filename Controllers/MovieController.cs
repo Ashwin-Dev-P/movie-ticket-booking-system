@@ -98,7 +98,7 @@ namespace MovieTicketBookingApp.Controllers
                               screen in _context.Screens on show.ScreenId equals screen.ScreenId
                               join
                               theater in _context.Theater on screen.TheaterId equals theater.TheaterId
-                              select (new { movieName = movie.title, theaterAddress = theater.Address , theaterName = theater.Name, screenName = screen.Name, showId= ShowId, price= show.Price, showTiming= show.ShowTime  })
+                              select (new { movieId = movie.movieId, movieName = movie.title, theaterId= theater.TheaterId, theaterAddress = theater.Address , theaterName = theater.Name, screenName = screen.Name, showId= ShowId, price= show.Price, showTiming= show.ShowTime  })
                               ).Single()
                               ;
 

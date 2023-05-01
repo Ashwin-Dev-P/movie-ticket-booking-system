@@ -1,5 +1,14 @@
 ﻿@model IEnumerable<MovieTicketBookingApp.Models.TheaterModel>
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/Movie">Movies</a></li>
+        <li class="breadcrumb-item"><a href="/Movie/Details/@(ViewContext.RouteData.Values["id"])">Movie Details</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Theater</li>
+    </ol>
+</nav>
+
+<h1 class="text-center"> Select the theater </h1>
 
 <table class="table">
     <thead>
