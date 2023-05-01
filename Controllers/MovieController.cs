@@ -87,11 +87,13 @@ namespace MovieTicketBookingApp.Controllers
             
             var showDetails = (from show in _context.Show
                               where (show.ShowId == ShowId)
+                              join 
+                              movie in _context.Movies on show.MovieId equals movie.movieId
                               join
                               screen in _context.Screens on show.ScreenId equals screen.ScreenId
                               join
                               theater in _context.Theater on screen.TheaterId equals theater.TheaterId
-                              select (new { theaterName = theater.Name, screenName = screen.Name, showId= ShowId, price= show.Price, showTiming= show.ShowTime  })
+                              select (new { movieName = movie.title, theaterAddress = theater.Address , theaterName = theater.Name, screenName = screen.Name, showId= ShowId, price= show.Price, showTiming= show.ShowTime  })
                               ).Single()
                               ;
 

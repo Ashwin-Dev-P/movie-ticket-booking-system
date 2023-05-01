@@ -25,14 +25,30 @@
                         @ViewBag.showDetails.showId
                     </td>
                 </tr>
-                <tr>
+                    <tr>
                         <th scope="row">
+                            Movie name
+                        </th>
+                        <td>
+                            @ViewBag.showDetails.movieName
+                        </td>
+                    </tr>
+                <tr>
+                    <th scope="row">
                         Theater name
                     </th>
                     <td>
                         @ViewBag.showDetails.theaterName
                     </td>
                 </tr>
+                    <tr>
+                        <th scope="row">
+                            Location
+                        </th>
+                        <td>
+                            @ViewBag.showDetails.theaterAddress
+                        </td>
+                    </tr>
                 <tr>
                         <th scope="row">
                         Screen name 
@@ -54,7 +70,7 @@
                         Price
                     </th>
                     <td>
-                        @ViewBag.showDetails.price
+                        Rs. @ViewBag.showDetails.price
                     </td>
                 </tr>
             </tbody>
@@ -62,8 +78,13 @@
     
     </div>
         <div class="text-center">
-            <div id="infoDiv"  class="alert " role="alert">
+            <div id="infoDiv"  class="alert " role="alert" style="display: none">
+                <p id="infoMsg" style="display: inline">
 
+                </p>
+                <button style="display:inline" role="button" class="btn-close" aria-label="Close" onclick="closeInfoDiv()" id="closeBtn">
+                    
+                </button>
             </div>
             <button class="btn btn-primary" onclick="ConfirmBooking()" id="bookBtn">
                 Confirm booking
@@ -77,6 +98,8 @@
 <script>
    
     const infoDiv = document.getElementById("infoDiv");
+    const infoMsg = document.getElementById("infoMsg");
+    const closeBtn = document.getElementById("closeBtn");
 
     
     // Example POST method implementation:
@@ -101,47 +124,61 @@
 
     
 
-    function ConfirmBooking(){
-        
+    function ConfirmBooking() {
+
 
         // Booking initiated
         const bookBtn = document.getElementById("bookBtn");
         bookBtn.innerHTML = "Booking...";
-        bookBtn.setAttribute("disabled",true);
-        
-        
+        bookBtn.setAttribute("disabled", true);
+
+
         const backendurl = "/api/BookingModel";
         const reqDataBody = {
-          
+
             ShowId: @ViewBag.showDetails.showId
-        }
+            }
         postData(backendurl, reqDataBody)
-        .then((data) => {
-            
-            console.log(data); 
+            .then((data) => {
 
-            infoDiv.innerHTML = "Your booking is confirmed. Your booking id is " + data.bookingId ;
-            infoDiv.classList.add("alert-success");
+                
+                console.log(data);
 
-            bookBtn.remove();
-        }).catch((error)=>{
+                infoMsg.innerHTML = "Your booking is confirmed. Your booking id is " + data.bookingId ;
 
-            infoDiv.innerHTML = "Unable to book ticket. Something went wrong";
-            infoDiv.classList.add("alert-danger");
+                // support Internet Explorer 9 or lower
+                infoDiv.className += " alert-success";
 
-            bookBtn.innerHTML = "Try confirming booking again";
-            bookBtn.removeAttribute("disabled");
+                // modern browsers
+                // infoDiv.classList.add("alert-success");
 
-            console.error(error);
+                document.getElementById("infoDiv").style.display = "block"
+                bookBtn.remove();
+            }).catch((error) => {
+
+                infoMsg.innerHTML = "Unable to book ticket. Something went wrong" ;
+
+                // support Internet Explorer 9 or lower
+                infoDiv.className += " alert-danger"
+
+                // modern browsers
+                // infoDiv.classList.add("alert-danger");
+
+                bookBtn.innerHTML = "Try confirming booking again";
+                bookBtn.removeAttribute("disabled");
+
+                document.getElementById("infoDiv").style.display = "block"
+
+                console.error(error);
 
 
-            
-        })
 
+            })
+    }
+
+    function closeInfoDiv(){
         
-        
-
-        
+        document.getElementById("infoDiv").style.display = "none";
     }
 
 </script>
