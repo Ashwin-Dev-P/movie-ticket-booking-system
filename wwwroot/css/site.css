@@ -38,3 +38,21 @@ a{
     border-color: white;
 }
 
+.nav-pills{
+    background-color: var(--theme);
+   
+
+}
+
+.nav-link{
+    color: white;
+}
+
+
+.nav-link:hover {
+    color: white;
+}
+
+.nav-pills .nav-link.active{
+    background-color: mediumpurple
+}
