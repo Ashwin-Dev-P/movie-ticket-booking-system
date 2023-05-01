@@ -5,6 +5,7 @@
 
 #sql query Files
 *.sql
+.vscode
 
 #appsettings
 appsettings.*

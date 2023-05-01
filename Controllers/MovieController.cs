@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +13,7 @@ using MovieTicketBookingApp.Models;
 
 namespace MovieTicketBookingApp.Controllers
 {
+    [Authorize(Roles = "Admin,Customer")]
     public class MovieController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -99,7 +103,8 @@ namespace MovieTicketBookingApp.Controllers
 
            
             ViewBag.showDetails = showDetails;
-
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewBag.UserId = userId;
             
             return View();
         }

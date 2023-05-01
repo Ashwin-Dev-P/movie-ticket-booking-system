@@ -20,6 +20,7 @@
                 <tr>
                         <th scope="row">
                         Show Id
+                       
                     </th>
                     <td>
                         @ViewBag.showDetails.showId
@@ -107,7 +108,7 @@
         // Default options are marked with *
         const response = await fetch(url, {
             method: "POST",
-            mode: "cors", // no-cors, *cors, same-origin
+            mode: "same-origin", // no-cors, *cors, same-origin
             
             credentials: "include", // include, *same-origin, omit
             headers: {
@@ -136,8 +137,10 @@
         const backendurl = "/api/BookingModel";
         const reqDataBody = {
 
-            ShowId: @ViewBag.showDetails.showId
-            }
+            ShowId: @ViewBag.showDetails.showId,
+            UserId: '@ViewBag.UserId'
+        }
+        console.log(reqDataBody);
         postData(backendurl, reqDataBody)
             .then((data) => {
 
