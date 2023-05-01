@@ -4,29 +4,39 @@
     ViewData["Title"] = "Details";
 }
 
-
-<div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-10 offset-md-1 ">
+            <div class="card shadow-sm">
+                <div class="card-body">
     
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.description)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a class="btn btn-primary" asp-action="GetTheatersWithMovie" asp-route-id="@Model?.movieId">Book tickets</a>
-    @if (this.User.IsInRole("Admin"))
-    {
-        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.movieId">Edit</a> 
-    }
-    <a class="btn btn-primary" asp-action="Index">Back to List</a>
+                    <dl class="row">
+                        <dt class="col-sm-2 text-capitalize">
+                            @Html.DisplayNameFor(model => model.title)
+                        </dt>
+                        <dd class = "col-sm-10">
+                            @Html.DisplayFor(model => model.title)
+                        </dd>
+                        <dt class="col-sm-2 text-capitalize">
+                            @Html.DisplayNameFor(model => model.description)
+                        </dt>
+                        <dd class = "col-sm-10">
+                            @Html.DisplayFor(model => model.description)
+                        </dd>
+                    </dl>
+                </div>
+                <div class="card-footer">
+                    @if (!this.User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-primary" asp-action="GetTheatersWithMovie" asp-route-id="@Model?.movieId">Book tickets</a>
+                    }
+                    @if (this.User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.movieId">Edit</a> 
+                    }
+                    <a class="btn btn-primary" asp-action="Index">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
