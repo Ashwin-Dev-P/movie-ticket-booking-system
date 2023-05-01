@@ -23,7 +23,10 @@
     </dl>
 </div>
 <div>
-    <a class="btn btn-primary" asp-action="GetTheatersWithMovie" asp-route-id="@Model?.movieId">Book tickets</a> 
-    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.movieId">Edit</a> 
+    <a class="btn btn-primary" asp-action="GetTheatersWithMovie" asp-route-id="@Model?.movieId">Book tickets</a>
+    @if (this.User.IsInRole("Admin"))
+    {
+        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.movieId">Edit</a> 
+    }
     <a class="btn btn-primary" asp-action="Index">Back to List</a>
 </div>

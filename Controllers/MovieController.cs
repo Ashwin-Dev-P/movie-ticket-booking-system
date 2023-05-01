@@ -13,7 +13,7 @@ using MovieTicketBookingApp.Models;
 
 namespace MovieTicketBookingApp.Controllers
 {
-    [Authorize(Roles = "Admin,Customer")]
+    //[Authorize(Roles = "Admin,Customer")]
     public class MovieController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -81,6 +81,7 @@ namespace MovieTicketBookingApp.Controllers
             return View();
         }
 
+        [Authorize(Roles ="Customer")]
         // GET: Movie/ConfirmBooking/5
         //[HttpGet("/{ShowId:int}")]
         [HttpGet]

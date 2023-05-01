@@ -6,9 +6,13 @@
 
 <h1 class="text-center">Movies</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-</p>
+@if (this.User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -18,9 +22,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.description)
             </th>
+
             <th></th>
-            <th></th>
-            <th></th>
+
+            @if (this.User.IsInRole("Admin"))
+            {
+                <th></th>
+            }
+            
         </tr>
     </thead>
     <tbody>
@@ -32,20 +41,26 @@
             <td>
                 @Html.DisplayFor(modelItem => item.description)
             </td>
-            <td>
-                
+            
+            @if (! this.User.IsInRole("Admin"))
+            {
+                <td>
                     <a asp-action="Details" asp-route-id="@item.movieId" class="btn btn-primary">Book Tickets</a> 
-                   @* <a asp-action="Edit" asp-route-id="@item.movieId">View Theaters</a> |*@
-               
                 </td>
-            <td>
-                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.movieId">Edit</a>
+            }
+            @* <a asp-action="Edit" asp-route-id="@item.movieId">View Theaters</a> |*@
+               
+            @if (this.User.IsInRole("Admin"))
+            {
+                <td>
+                     <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.movieId">Edit</a>
 
-            </td>
-            <td>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.movieId">Delete</a>
+                </td>
+                <td>
+                     <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.movieId">Delete</a>
 
-            </td>
+                </td>
+            }
         </tr>
 }
     </tbody>
