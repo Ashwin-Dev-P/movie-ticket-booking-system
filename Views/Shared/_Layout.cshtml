@@ -27,6 +27,13 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Movie" asp-action="Index">Movies</a>
                         </li>
 
+                        @if (this.User.IsInRole("Customer"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Booking" asp-action="ShowMyBookings">My bookings</a>
+                            </li>
+                        }
+
                         @if (this.User.IsInRole("Admin"))
                         {
                             <li class="nav-item">

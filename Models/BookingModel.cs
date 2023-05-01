@@ -84,6 +84,7 @@ namespace MovieTicketBookingApp.Models
 
             routes.MapDelete("/api/BookingModel/{id}", async (int BookingId, ApplicationDbContext db) =>
             {
+                Console.WriteLine("Deleting"+BookingId);
                 if (await db.Bookings.FindAsync(BookingId) is BookingModel bookingModel)
                 {
                     db.Bookings.Remove(bookingModel);
@@ -91,6 +92,7 @@ namespace MovieTicketBookingApp.Models
                     return Results.Ok(bookingModel);
                 }
 
+                Console.WriteLine("Booking not found");
                 return Results.NotFound();
             })
             .WithName("DeleteBookingModel");

@@ -1,0 +1,202 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div id="infoDiv" class="alert " role="alert" style="display: none">
+    <p id="infoMsg" style="display: inline">
+
+    </p>
+    <button style="display:inline" role="button" class="btn-close" aria-label="Close" onclick="closeInfoDiv()" id="closeBtn">
+    </button>
+</div>
+<div class="row">
+    @if (ViewBag.bookings == null  )
+    {
+        <div class="m-5 p-5 text-center">
+            <div class="py-3"> You have not booked any show yet. Start booking shows </div>
+            <div>
+                <a href="/Movie" class="btn btn-primary">Browse movies</a>
+            </div>
+        </div>
+
+    }else{
+        @foreach (var booking in ViewBag.bookings)
+        {
+
+
+
+            <div class="col-xs-12 col-md-6 col-lg-4 p-2" id="booking @booking.bookingId">
+                <div class="table-responsive  shadow-sm p-3">
+                    <table class="table">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">
+                                    Booking Id
+
+                                </th>
+                                <td>
+                                    @booking.bookingId
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Show Id
+
+                                </th>
+                                <td>
+                                    @booking.showId
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Movie name
+                                </th>
+                                <td>
+                                    @booking.movieName
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Theater name
+                                </th>
+                                <td>
+                                    @booking.theaterName
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Location
+                                </th>
+                                <td>
+                                    @booking.theaterAddress
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Screen name
+                                </th>
+                                <td>
+                                    @booking.screenName
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Timing
+                                </th>
+                                <td>
+                                    @booking.showTiming
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Price
+                                </th>
+                                <td>
+                                    Rs. @booking.price
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    <button class="btn btn-danger" onclick="CancelBooking(this,@booking.bookingId)">
+                        Cancel booking
+                    </button>
+                </div>
+
+
+
+            </div>
+
+        }
+
+    }
+    
+</div>
+
+<script>
+    const infoDiv = document.getElementById("infoDiv");
+    const infoMsg = document.getElementById("infoMsg");
+    const closeBtn = document.getElementById("closeBtn");
+
+
+    // Example POST method implementation:
+    async function postData(url = "") {
+        // Default options are marked with *
+        const response = await fetch(url, {
+            method: "DELETE",
+            mode: "same-origin", // no-cors, *cors, same-origin
+
+            credentials: "include", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify({}), // body data type must match "Content-Type" header
+        });
+        //return response.json(); // parses JSON response into native JavaScript objects
+    }
+
+
+
+
+    function CancelBooking(cancelBtn,bookingId) {
+
+
+        // Booking initiated
+        
+        cancelBtn.innerHTML = "Cancelling booking...";
+        cancelBtn.setAttribute("disabled", true);
+
+
+        const backendurl = "/api/Bookings/"+bookingId;
+        
+        postData(backendurl)
+            .then((data) => {
+
+
+                
+
+                infoMsg.innerHTML = "Your booking is cancelled";
+
+                // support Internet Explorer 9 or lower
+                infoDiv.className += " alert-success";
+
+                // modern browsers
+                // infoDiv.classList.add("alert-success");
+
+                document.getElementById("infoDiv").style.display = "block"
+                
+                document.getElementById("booking "+bookingId).remove();
+            }).catch((error) => {
+
+                infoMsg.innerHTML = "Unable to cancel booking. Something went wrong";
+
+                // support Internet Explorer 9 or lower
+                infoDiv.className += " alert-danger"
+
+                // modern browsers
+                // infoDiv.classList.add("alert-danger");
+
+                cancelBtn.innerHTML = "Try cancelling booking again";
+                cancelBtn.removeAttribute("disabled");
+
+                document.getElementById("infoDiv").style.display = "block"
+
+                console.error(error);
+
+
+
+            })
+    }
+
+    function closeInfoDiv() {
+
+        document.getElementById("infoDiv").style.display = "none";
+    }
+</script>
