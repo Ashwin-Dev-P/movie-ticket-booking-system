@@ -1,0 +1,23 @@
+﻿
+/* Zoom on hover starts */
+.zoom {
+    transition: all .1s ease-in-out;
+}
+
+.zoom:hover {
+    transform: scale(1.03);
+}
+/* Zoom on hover ends */
+
+
+/* Show more description starts */
+.smalldesc {
+    max-height: 100px;
+    overflow: hidden;
+    transition: all .3s ease;
+}
+
+.smalldesc.expand {
+    max-height: max-content;
+}
+/* Show more description ends */
