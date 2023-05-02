@@ -7,6 +7,9 @@
 *.sql
 .vscode
 
+#images uploaded on object creations
+/uploads
+
 #appsettings
 appsettings.*
 

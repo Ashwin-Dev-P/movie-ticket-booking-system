@@ -10,6 +10,8 @@ namespace MovieTicketBookingApp.Models
         [Required]
         public string title { get; set; }
 
+        public string imageExtension { get; set; }
+
         [DataType(DataType.MultilineText)]
         public string? description { get; set; }
 

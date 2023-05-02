@@ -20,8 +20,8 @@
 <div class="row">
     @foreach (var item in Model) {
         <div class="col-xs-12 col-md-4 col-lg-4 my-3 ">
-                <div class="card shadow-sm zoom" >
-          
+            <div class="card shadow-sm zoom" >
+                <img class="card-img-top" src="/img/uploads/movies/@(item.movieId+@item.imageExtension)" alt="Card image cap">
               <div class="card-body">
                 <h5 class="card-title">@Html.DisplayFor(modelItem => item.title)</h5>
                 <div class="smalldesc" id="@item.movieId">

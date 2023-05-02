@@ -115,16 +115,45 @@ namespace MovieTicketBookingApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("movieId,title,description")] MovieModel movieModel)
+        public async Task<IActionResult> Create([Bind("movieId,title,description")] MovieModel movieModel, IFormFile moviepicture)
         {
+
+            // Check whether the image is selected
+            ViewBag.errorMsg = null;
+            if ( moviepicture == null)
+            {
+                ViewBag.errorMsg = "Please select a picture";
+                return View(movieModel);
+            }
+            
+            
+
             //if (ModelState.IsValid)
             //{
-                
+
             //}
             try
             {
+                // get extension of picture
+                string ext = Path.GetExtension(this.Request.Form.Files[0].FileName);
+
+                movieModel.imageExtension = ext;
+
                 _context.Add(movieModel);
                 await _context.SaveChangesAsync();
+
+
+                // Generate name for the file
+                int movieId = movieModel.movieId;
+                string fileName = Convert.ToString(movieId) + ext;
+
+                // Create path and stream it to the location
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\img\uploads\movies\", fileName);
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    this.Request.Form.Files[0].CopyTo(stream);
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception ex)
