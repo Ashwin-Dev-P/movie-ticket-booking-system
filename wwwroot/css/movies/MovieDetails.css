@@ -1,0 +1,11 @@
+﻿/* Show more description starts */
+.smalldesc {
+    max-height: 100px;
+    overflow: hidden;
+    transition: all .3s ease;
+}
+
+.smalldesc.expand {
+    max-height: max-content;
+}
+/* Show more description ends */

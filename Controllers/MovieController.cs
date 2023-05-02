@@ -195,7 +195,11 @@ namespace MovieTicketBookingApp.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+                
+            //}
+            try
             {
                 try
                 {
@@ -214,6 +218,10 @@ namespace MovieTicketBookingApp.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
             return View(movieModel);
         }

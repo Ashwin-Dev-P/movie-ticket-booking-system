@@ -17,45 +17,42 @@
 
 
 
-<div class="row">
+<div class="row  px-5">
     @foreach (var item in Model) {
-        <div class="col-xs-12 col-md-4 col-lg-4 my-3 ">
-            <div class="card shadow-sm zoom" >
-                <img class="card-img-top" src="/img/uploads/movies/@(item.movieId+@item.imageExtension)" alt="Card image cap">
-              <div class="card-body">
-                <h5 class="card-title">@Html.DisplayFor(modelItem => item.title)</h5>
-                <div class="smalldesc" id="@item.movieId">
-                    <p class="card-text">@Html.DisplayFor(modelItem => item.description)</p>
-                </div>
-                <span class="text-primary text-decoration-none" onClick="expandDescription(this,@item.movieId)">Show more...</span>
-
+        <span class="zoom col-xs-12 col-md-3 my-3">
             
+            
+                    <span class="card shadow-sm ">
+                        <a asp-action="Details" asp-route-id="@item.movieId"  >
+                            <img class="card-img-top" src="/img/uploads/movies/@(item.movieId+@item.imageExtension)" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">@Html.DisplayFor(modelItem => item.title)</h5>
+                        
+                                @*<span class="text-primary text-decoration-none" onClick="expandDescription(this,@item.movieId)">Show more...</span>
+        *@
 
-              </div>
-              <div class="card-footer">
-                  @if (! this.User.IsInRole("Admin"))
-                {
-              
-                        <a asp-action="Details" asp-route-id="@item.movieId" class="btn btn-primary">Book Tickets</a> 
-                
-                }
-           
-               
-                @if (this.User.IsInRole("Admin"))
-                {
-              
-                         <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.movieId">Edit</a>
 
-                
-                         <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.movieId">Delete</a>
+                            </div>
+                        </a>
 
-                
-                }
-            </div>
-            </div>
-        </div>
-       
+                        @if (this.User.IsInRole("Admin"))
+                        {
+                            <span class=" card-footer bg-light row mx-1">
+                                <a class="btn btn-primary w-50" asp-action="Edit" asp-route-id="@item.movieId">Edit</a>
+
+
+                                <a class="btn btn-danger w-50" asp-action="Delete" asp-route-id="@item.movieId">Delete</a>
+
+                            </span>
+
+                        }
+
+                    </span>
+            
+            
+            
+        </span>
     }
 </div>
 
-<script src="/js/movies/MovieList.js"></script>
+@*<script src="/js/movies/MovieList.js"></script>*@

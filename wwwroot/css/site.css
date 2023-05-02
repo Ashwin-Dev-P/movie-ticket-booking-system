@@ -56,3 +56,10 @@ a{
 .nav-pills .nav-link.active{
     background-color: mediumpurple
 }
+
+
+img {
+    object-fit: cover;
+    /*width: 230px;*/
+    height: 380px;
+}

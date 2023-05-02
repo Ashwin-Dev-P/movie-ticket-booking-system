@@ -4,6 +4,8 @@
     ViewData["Title"] = "Details";
 }
 
+<link rel="stylesheet" type="text/css" href="/css/movies/MovieDetails.css">
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/Movie">Movies</a></li>
@@ -27,8 +29,13 @@
                         <dt class="col-sm-2 text-capitalize">
                             @Html.DisplayNameFor(model => model.description)
                         </dt>
-                        <dd class = "col-sm-10">
-                            @Html.DisplayFor(model => model.description)
+                        <dd class="col-sm-10">
+                            <p class="smalldesc" id="description">
+                                @Html.DisplayFor(model => model.description)
+                            </p>
+                            
+
+                            <span class="text-primary text-decoration-none" onClick="expandDescription(this)" id="descriptionHeightToggler">Show more...</span>
                         </dd>
                     </dl>
                 </div>
@@ -47,3 +54,5 @@
         </div>
     </div>
 </div>
+
+<script src="/js/movies/MovieDetails.js"></script>
