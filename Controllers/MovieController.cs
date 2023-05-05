@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieTicketBookingApp.Data;
 using MovieTicketBookingApp.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MovieTicketBookingApp.Controllers
 {
@@ -256,6 +257,15 @@ namespace MovieTicketBookingApp.Controllers
             var movieModel = await _context.Movies.FindAsync(id);
             if (movieModel != null)
             {
+                // Generate name for the file
+                int movieId = movieModel.movieId;
+                string ext = movieModel.imageExtension;
+                string fileName = Convert.ToString(movieId) + ext;
+
+                // Create path and delete it from the location
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\img\uploads\movies\", fileName);
+                System.IO.File.Delete(filePath);
+
                 _context.Movies.Remove(movieModel);
             }
             
