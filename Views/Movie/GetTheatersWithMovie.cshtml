@@ -8,37 +8,48 @@
     </ol>
 </nav>
 
-<h1 class="text-center"> Select the theater </h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                Location
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-                    
-            </td>
-            <td>
-                    <a class="btn btn-primary" href="/Movie/ViewScreens?TheaterId=@item.TheaterId&MovieId=@(ViewContext.RouteData.Values["id"])">View shows</a>
-               @* <a asp-action="Edit" asp-route-id="@item.TheaterId">Edit</a> |
+
+@if ( ViewBag.theaterCount == 0 )
+{
+    <p class="text-center py-5">This movie is not currently streamed in any theater</p>
+}
+else
+{
+    <h1 class="text-center"> Select the theater </h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    Location
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" href="/Movie/ViewScreens?TheaterId=@item.TheaterId&MovieId=@(ViewContext.RouteData.Values["id"])">View shows</a>
+                        @* <a asp-action="Edit" asp-route-id="@item.TheaterId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.TheaterId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.TheaterId">Delete</a>*@
-            </td>
-        </tr>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
+
+

@@ -37,7 +37,9 @@ namespace MovieTicketBookingApp.Controllers
         {
             var theaters = from show in _context.Show join screen in _context.Screens on show.ScreenId equals screen.ScreenId join theater in _context.Theater on screen.TheaterId equals theater.TheaterId where(show.MovieId == id)  select (theater)  ;
             
+            ViewBag.theaterCount = theaters.ToList().Count;
             
+
             return View(theaters);
             //return View(await _context.Show.Where(show => show.MovieId == id).Include("Theater").ToListAsync());
                         
@@ -189,21 +191,20 @@ namespace MovieTicketBookingApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("movieId,title,description")] MovieModel movieModel)
+        public async Task<IActionResult> Edit(int id, [Bind("movieId,title,description,imageExtension")] MovieModel movieModel)
         {
             if (id != movieModel.movieId)
             {
                 return NotFound();
             }
 
-            //if (ModelState.IsValid)
-            //{
-                
-            //}
+            
             try
             {
                 try
                 {
+
+                    Console.WriteLine(movieModel);
                     _context.Update(movieModel);
                     await _context.SaveChangesAsync();
                 }

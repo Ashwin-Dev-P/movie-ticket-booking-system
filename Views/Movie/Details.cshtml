@@ -17,42 +17,35 @@
     <div class="row">
         <div class="col-xs-12 col-md-10 offset-md-1 ">
             <div class="card shadow-sm">
-                <div class="card-body">
-    
-                    <dl class="row">
-                        <dt class="col-sm-2 text-capitalize">
-                            @Html.DisplayNameFor(model => model.title)
-                        </dt>
-                        <dd class = "col-sm-10">
-                            @Html.DisplayFor(model => model.title)
-                        </dd>
-                        <dt class="col-sm-2 text-capitalize">
-                            @Html.DisplayNameFor(model => model.description)
-                        </dt>
-                        <dd class="col-sm-10">
-                            <p class="smalldesc" id="description">
-                                @Html.DisplayFor(model => model.description)
-                            </p>
-                            
+                <img src="/img/uploads/movies/@(Model.movieId+Model.imageExtension)" class="card-img-top" />
+                <div class="card-body my-3">
+            
+                    <h5 class="card-title"> @Model.title </h5>
+            
+                    <p class="card-text smalldesc" id="description">
+                        @Html.DisplayFor(model => model.description)
+                    </p>
+                    <span class="text-primary text-decoration-none my-1" onClick="expandDescription(this)" id="descriptionHeightToggler">Show more...</span>
 
-                            <span class="text-primary text-decoration-none" onClick="expandDescription(this)" id="descriptionHeightToggler">Show more...</span>
-                        </dd>
-                    </dl>
+            
+                    <div>
+                        @if (!this.User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-primary" asp-action="GetTheatersWithMovie" asp-route-id="@Model?.movieId">Book tickets</a>
+                        }
+                        @if (this.User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.movieId">Edit</a>
+                        }
+                        <a class="btn btn-primary" asp-action="Index">Back to List</a>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    @if (!this.User.IsInRole("Admin"))
-                    {
-                        <a class="btn btn-primary" asp-action="GetTheatersWithMovie" asp-route-id="@Model?.movieId">Book tickets</a>
-                    }
-                    @if (this.User.IsInRole("Admin"))
-                    {
-                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.movieId">Edit</a> 
-                    }
-                    <a class="btn btn-primary" asp-action="Index">Back to List</a>
-                </div>
+                
             </div>
         </div>
     </div>
+    
+            
 </div>
 
 <script src="/js/movies/MovieDetails.js"></script>
