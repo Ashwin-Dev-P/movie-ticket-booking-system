@@ -33,7 +33,7 @@
                     
             </td>
             <td>
-                <a class="btn btn-primary" href="/Movie/ViewScreens?TheaterId=@item.TheaterId&MovieId=4">View shows</a>
+                    <a class="btn btn-primary" href="/Movie/ViewScreens?TheaterId=@item.TheaterId&MovieId=@(ViewContext.RouteData.Values["id"])">View shows</a>
                @* <a asp-action="Edit" asp-route-id="@item.TheaterId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.TheaterId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.TheaterId">Delete</a>*@
