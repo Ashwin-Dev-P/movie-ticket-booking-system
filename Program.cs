@@ -4,6 +4,12 @@ using MovieTicketBookingApp.Data;
 using MovieTicketBookingApp.Models;
 using MovieTicketBookingApp.Controllers;
 
+using Microsoft.AspNetCore.Identity.UI.Services;
+
+// For mail service
+using MovieTicketBookingApp.Interfaces;
+using MovieTicketBookingApp.InterfaceImplementation;
+
 namespace MovieTicketBookingApp
 {
     public class Program
@@ -22,6 +28,9 @@ namespace MovieTicketBookingApp
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+
+            // Add email service.
+            builder.Services.AddTransient<Interfaces.IEmailSender, EmailSender>();
 
             var app = builder.Build();
 

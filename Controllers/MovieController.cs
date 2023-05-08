@@ -9,8 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieTicketBookingApp.Data;
+using MovieTicketBookingApp.Data.Migrations;
+
 using MovieTicketBookingApp.Models;
 using static System.Net.Mime.MediaTypeNames;
+
+// Email service
+using MovieTicketBookingApp.Interfaces;
 
 namespace MovieTicketBookingApp.Controllers
 {
@@ -18,10 +23,12 @@ namespace MovieTicketBookingApp.Controllers
     public class MovieController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IEmailSender emailSender;
 
-        public MovieController(ApplicationDbContext context)
+        public MovieController(ApplicationDbContext context, IEmailSender emailSender)
         {
             _context = context;
+            this.emailSender = emailSender;
         }
 
         // GET: Movie
@@ -258,6 +265,42 @@ namespace MovieTicketBookingApp.Controllers
             var movieModel = await _context.Movies.FindAsync(id);
             if (movieModel != null)
             {
+                // Send mail to all users who have booked show for the movie
+                var customers = from show in _context.Show
+                                 where show.MovieId == id
+                                 join
+                                 booking in _context.Bookings on show.ShowId equals booking.ShowId
+                                 join
+                                 user in _context.AspNetUsers on booking.UserId equals user.Id
+                                 select (
+                                        new {
+                                            customerData = user.EmailConfirmed ? 
+                                            
+                                            new
+                                            {
+                                                email = user.Email,
+                                                body = $"Your booking {booking.BookingId} for the show at {show.ShowTime} has been cancelled."
+
+                                            }
+                                            :
+                                            null
+                                            ,
+                                            }
+                                    )
+                                 ;
+
+
+                string subject = "Movie booking cancelled";
+                
+                foreach (var customer in customers)
+                {
+
+                    Console.WriteLine($"Customer {customer.customerData.email}");
+                    await emailSender.SendEmailAsync(customer.customerData.email, subject, customer.customerData.body);
+
+
+                }
+
                 // Generate name for the file
                 int movieId = movieModel.movieId;
                 string ext = movieModel.imageExtension;
